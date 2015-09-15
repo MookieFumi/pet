@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace kk.Model.Entities
+namespace pet.dal.Model.Entities
 {
     public class Usuario
     {

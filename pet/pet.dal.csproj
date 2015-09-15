@@ -42,6 +42,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -53,11 +57,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUsuariosService.cs" />
+    <Compile Include="Model\Entities\Carioca\Contenedor.cs" />
+    <Compile Include="Model\Entities\Carioca\Tipo\ContenedorTipo.cs" />
+    <Compile Include="Model\Entities\Carioca\Tienda.cs" />
+    <Compile Include="Model\Entities\Carioca\Tipo\ICariocaTipo.cs" />
+    <Compile Include="Model\Entities\Carioca\Ubicacion.cs" />
+    <Compile Include="Model\Entities\Carioca\Tipo\UbicacionTipo.cs" />
+    <Compile Include="Model\Entities\Carioca\Zona.cs" />
+    <Compile Include="Model\Entities\Carioca\Tipo\ZonaTipo.cs" />
+    <Compile Include="Services\Carioca\ICariocaService.cs" />
+    <Compile Include="Services\Carioca\CariocaService.cs" />
+    <Compile Include="Services\IUsuariosService.cs" />
     <Compile Include="Model\Entities\Empresa.cs" />
     <Compile Include="Model\MeContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Entities\Usuario.cs" />
+    <Compile Include="Services\DTO\UsuarioEmpresa.cs" />
+    <Compile Include="Services\UsuariosService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

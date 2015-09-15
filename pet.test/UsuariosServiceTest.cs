@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Data.Entity;
 using NUnit.Framework;
-using kk.Model;
-using kk.Model.Entities;
+using pet.dal.Model;
+using pet.dal.Model.Entities;
+using pet.dal.Services;
+using System.Linq;
 
-namespace kk.test
+namespace pet.test
 {
     class UsuariosServiceTest
     {
@@ -40,8 +42,15 @@ namespace kk.test
         [Test]
         public void GetUsuariosTest()
         {
-            var usuarios = _sut.GetUsuarios();
+            var usuarios = _sut.GetUsuarios().ToList();
             Assert.AreEqual(3, usuarios.Count);
+        }
+
+        [Test]
+        public void GetUsuarioTest_Return_Null_When_UsuarioId_NotExists()
+        {
+            var usuario = _sut.GetUsuario(0);
+            Assert.IsNull(usuario);
         }
 
     }
