@@ -1,15 +1,15 @@
 ﻿using System;
-using NUnit.Framework;
-using pet.dal.Services.Carioca;
 using System.Data.Entity;
 using System.Linq;
+using NUnit.Framework;
 using pet.dal.Model;
-using pet.dal.Model.Entities.Carioca;
 using pet.dal.Model.Entities;
+using pet.dal.Model.Entities.Carioca;
+using pet.dal.Services.Carioca;
 
 namespace pet.test
 {
-    class CariocaSerciceTest
+    internal class CariocaSerciceTest
     {
         private MeContext _context;
         private ICariocaService _sut;
@@ -28,70 +28,107 @@ namespace pet.test
         }
 
         [Test]
-        public void When_AddZonaTipo_ZonaTipo_IsAdded()
+        public void When_AddTipoZona_TipoZona_IsAdded()
         {
             //Arrange
-            var zonaTipo = new ZonaTipoBuilder()
-                .WithCodigo("ZONA_TIPO_001")
-                .WithDescripcion("DESCRIPCION_ZONA_TIPO_001")
-                .WithEmpresa(_context.Empresas.First())
-                .Build();
+            var tipoZona =
+                new TipoZonaBuilder().WithCodigo("ZONA_TIPO_001").WithDescripcion("DESCRIPCION_ZONA_TIPO_001")
+                    .WithEmpresa(_context.Empresas.First())
+                    .Build();
 
             //Act
-            _sut.AddZonaTipo(zonaTipo);
+            _sut.AddTipoZona(tipoZona);
 
             //Assert
-            Assert.AreEqual(_context.ZonaTipos.First().Codigo, zonaTipo.Codigo);
+            Assert.AreEqual(_context.TiposZona.First().Codigo, tipoZona.Codigo);
         }
 
         [Test]
-        public void When_AddZonaTipo_Throws_ApplicationException_If_Codigo_Exists()
+        public void When_AddTipoZona_Throws_ApplicationException_If_Codigo_Exists()
         {
             //Arrange
-            var zonaTipo = new ZonaTipoBuilder()
-                .WithCodigo("ZONA_TIPO_001")
-                .WithDescripcion("DESCRIPCION_ZONA_TIPO_001")
-                .WithEmpresa(_context.Empresas.First())
-                .Build();
+            var tipoZona =
+                new TipoZonaBuilder().WithCodigo("ZONA_TIPO_001").WithDescripcion("DESCRIPCION_ZONA_TIPO_001")
+                    .WithEmpresa(_context.Empresas.First())
+                    .Build();
 
             //Act
-            _sut.AddZonaTipo(zonaTipo);
+            _sut.AddTipoZona(tipoZona);
 
             //Assert
-            Assert.That(() => _sut.AddZonaTipo(zonaTipo), Throws.Exception.TypeOf<ApplicationException>());
-
+            Assert.That(() => _sut.AddTipoZona(tipoZona), Throws.Exception.TypeOf<ApplicationException>());
         }
 
-        class ZonaTipoBuilder
+        [Test]
+        public void When_UpdateTipoZona_Throws_ApplicationException_If_Change_Codigo_And_Exists()
         {
-            private readonly ZonaTipo _zonaTipo;
+            //Arrange
+            var tipoZona =
+                new TipoZonaBuilder().WithCodigo("ZONA_TIPO_001").WithDescripcion("DESCRIPCION_ZONA_TIPO_001")
+                    .WithEmpresa(_context.Empresas.First())
+                    .Build();
+            _sut.AddTipoZona(tipoZona);
+            var tipoZona2 =
+                new TipoZonaBuilder().WithCodigo("ZONA_TIPO_002").WithDescripcion("DESCRIPCION_ZONA_TIPO_002")
+                    .WithEmpresa(_context.Empresas.First())
+                    .Build();
+            _sut.AddTipoZona(tipoZona2);
 
-            public ZonaTipoBuilder()
+            //Act
+            tipoZona2.Codigo = tipoZona.Codigo;
+
+            //Assert
+            Assert.That(() => _sut.UpdateTipoZona(tipoZona2), Throws.Exception.TypeOf<ApplicationException>());
+        }
+
+        [Test]
+        [Explicit("No es un test al uso. Es un método que incorpora datos de pruebas")]
+        public void Load_Data_To_Test_Database()
+        {
+            var items = CariocaServiceTestHelper.GetResumenUbicacion().ToList();
+            var tiendasParaImportar = CariocaServiceTestHelper.GetTiendasUnicas(items);
+            var empresaId = _context.Empresas.Select(p => p.EmpresaId).First();
+
+            foreach (var tiendaParaImportar in tiendasParaImportar)
             {
-                _zonaTipo = new ZonaTipo();
+                var tienda = new Tienda { Nombre = tiendaParaImportar, EmpresaId = empresaId };
+                CariocaServiceTestHelper.FillZonas(items, empresaId, tienda);
+                _context.Tiendas.Add(tienda);
             }
 
-            public ZonaTipoBuilder WithCodigo(string codigo)
+            _context.SaveChanges();
+        }
+
+        private class TipoZonaBuilder
+        {
+            private readonly TipoZona _tipoZona;
+
+            public TipoZonaBuilder()
             {
-                _zonaTipo.Codigo = codigo;
+                _tipoZona = new TipoZona();
+            }
+
+            public TipoZonaBuilder WithCodigo(string codigo)
+            {
+                _tipoZona.Codigo = codigo;
                 return this;
             }
 
-            public ZonaTipoBuilder WithDescripcion(string descripcion)
+            public TipoZonaBuilder WithDescripcion(string descripcion)
             {
-                _zonaTipo.Descripcion = descripcion;
+                _tipoZona.Descripcion = descripcion;
                 return this;
             }
 
-            public ZonaTipoBuilder WithEmpresa(Empresa empresa)
+            public TipoZonaBuilder WithEmpresa(Empresa empresa)
             {
-                _zonaTipo.Empresa = empresa;
+                _tipoZona.Empresa = empresa;
                 return this;
             }
 
-            public ZonaTipo Build()
+            public TipoZona Build()
             {
-                return _zonaTipo;
+                return _tipoZona;
             }
         }
     }

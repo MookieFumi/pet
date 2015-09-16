@@ -15,9 +15,9 @@ namespace pet.dal.Model
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Tienda> Tiendas { get; set; }
 
-        public virtual DbSet<ZonaTipo> ZonaTipos { get; set; }
-        public DbSet<ContenedorTipo> ContenedorTipos { get; set; }
-        public DbSet<UbicacionTipo> UbicacionTipos { get; set; }
+        public virtual DbSet<TipoZona> TiposZona { get; set; }
+        public DbSet<TipoContenedor> TiposContenedor { get; set; }
+        public DbSet<TipoUbicacion> TiposUbicacion { get; set; }
         public DbSet<Zona> Zonas { get; set; }
         public DbSet<Contenedor> Contenedores { get; set; }
         public DbSet<Ubicacion> Ubicaciones { get; set; }
@@ -30,9 +30,9 @@ namespace pet.dal.Model
             modelBuilder.Entity<Usuario>().ToTable("Usuarios");
             modelBuilder.Entity<Tienda>().ToTable("Tiendas");
 
-            modelBuilder.Entity<ZonaTipo>().ToTable("ZonaTipos");
-            modelBuilder.Entity<ContenedorTipo>().ToTable("ContenedorTipos");
-            modelBuilder.Entity<UbicacionTipo>().ToTable("UbicacionTipos");
+            modelBuilder.Entity<TipoZona>().ToTable("_TiposZona");
+            modelBuilder.Entity<TipoContenedor>().ToTable("_TiposContenedores");
+            modelBuilder.Entity<TipoUbicacion>().ToTable("_TiposUbicaciones");
             modelBuilder.Entity<Zona>().ToTable("Zonas");
             modelBuilder.Entity<Contenedor>().ToTable("Contenedores");
             modelBuilder.Entity<Ubicacion>().ToTable("Ubicaciones");

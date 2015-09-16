@@ -7,8 +7,10 @@ namespace pet.dal.Model.Entities.Carioca
         public virtual string Descripcion { get; set; }
         public virtual bool Activada { get; set; }
 
-        public virtual int? UbicacionTipoId { get; set; }
-        public virtual UbicacionTipo UbicacionTipo { get; set; }
+        public virtual int? TipoUbicacionId { get; set; }
+        public virtual TipoUbicacion Tipo { get; set; }
+
+        public virtual int EmpresaId { get; set; }
 
         public virtual int ContenedorId { get; set; }
         public virtual Contenedor Contenedor { get; set; }

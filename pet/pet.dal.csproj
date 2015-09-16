@@ -58,15 +58,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Entities\Carioca\Contenedor.cs" />
-    <Compile Include="Model\Entities\Carioca\Tipo\ContenedorTipo.cs" />
+    <Compile Include="Model\Entities\Carioca\Tipo\TipoContenedor.cs" />
     <Compile Include="Model\Entities\Carioca\Tienda.cs" />
-    <Compile Include="Model\Entities\Carioca\Tipo\ICariocaTipo.cs" />
     <Compile Include="Model\Entities\Carioca\Ubicacion.cs" />
-    <Compile Include="Model\Entities\Carioca\Tipo\UbicacionTipo.cs" />
+    <Compile Include="Model\Entities\Carioca\Tipo\TipoUbicacion.cs" />
     <Compile Include="Model\Entities\Carioca\Zona.cs" />
-    <Compile Include="Model\Entities\Carioca\Tipo\ZonaTipo.cs" />
-    <Compile Include="Services\Carioca\ICariocaService.cs" />
+    <Compile Include="Model\Entities\Carioca\Tipo\TipoZona.cs" />
     <Compile Include="Services\Carioca\CariocaService.cs" />
+    <Compile Include="Services\Carioca\ICariocaService.cs" />
     <Compile Include="Services\IUsuariosService.cs" />
     <Compile Include="Model\Entities\Empresa.cs" />
     <Compile Include="Model\MeContext.cs" />

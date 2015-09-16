@@ -15,99 +15,271 @@ namespace pet.dal.Services.Carioca
             _context = context;
         }
 
-        public void AddZonaTipo(ZonaTipo zonaTipo)
+        public void AddUbicacion(Ubicacion ubicacion)
         {
-            if (Exists<ZonaTipo>(zonaTipo.EmpresaId, zonaTipo.Codigo))
+            if (ExistsUbicacion(ubicacion.ContenedorId, ubicacion.Nombre))
             {
-                throw new ApplicationException("Ya existe un tipo de zona con el código indicado");
+                throw new ApplicationException("Ya existe una ubicación con el nombre indicado");
             }
 
-            _context.ZonaTipos.Add(zonaTipo);
+            ubicacion.Activada = true;
+            _context.Ubicaciones.Add(ubicacion);
             _context.SaveChanges();
         }
 
-        public void UpdateZonaTipo(ZonaTipo zonaTipo)
+        public void UpdateUbicacion(Ubicacion ubicacion)
         {
-            _context.ZonaTipos.Attach(zonaTipo);
-            _context.Entry(zonaTipo).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
-
-        public void RemoveZonaTipo(int zonaTipoId)
-        {
-            var zonaTipo = GetZonaTipo(zonaTipoId);
-            _context.ZonaTipos.Remove(zonaTipo);
-            _context.SaveChanges();
-        }
-
-        public ZonaTipo GetZonaTipo(int zonaTipoId)
-        {
-            return _context.ZonaTipos.Find(zonaTipoId);
-        }
-
-        public void AddContenedorTipo(ContenedorTipo contenedorTipo)
-        {
-            if (Exists<ContenedorTipo>(contenedorTipo.EmpresaId, contenedorTipo.Codigo))
+            if (ExistsUbicacion(ubicacion.ContenedorId, ubicacion.Nombre, ubicacion.UbicacionId))
             {
-                throw new ApplicationException("Ya existe un tipo de contenedor con el código indicado");
+                throw new ApplicationException("Ya existe una ubicacion con el nombre indicado");
             }
 
-            _context.ContenedorTipos.Add(contenedorTipo);
+            _context.Ubicaciones.Attach(ubicacion);
+            _context.Entry(ubicacion).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
-        public void UpdateContenedorTipo(ContenedorTipo contenedorTipo)
+        public void RemoveUbicacion(int ubicacionId)
         {
-            _context.ContenedorTipos.Attach(contenedorTipo);
-            _context.Entry(contenedorTipo).State = EntityState.Modified;
+            var ubicacion = GetUbicacion(ubicacionId);
+            _context.Ubicaciones.Remove(ubicacion);
             _context.SaveChanges();
         }
 
-        public void RemoveContenedorTipo(int contenedorTipoId)
+        public Ubicacion GetUbicacion(int ubicacionId)
         {
-            var contenedorTipo = GetContenedorTipo(contenedorTipoId);
-            _context.ContenedorTipos.Remove(contenedorTipo);
+            return _context.Ubicaciones.Find(ubicacionId);
+        }
+
+        public void AddContenedor(Contenedor contenedor)
+        {
+            if (ExistsContenedor(contenedor.ZonaId, contenedor.Nombre))
+            {
+                throw new ApplicationException("Ya existe un ubicacion con el nombre indicado");
+            }
+
+            contenedor.Activada = true;
+            _context.Contenedores.Add(contenedor);
             _context.SaveChanges();
         }
 
-        public ContenedorTipo GetContenedorTipo(int contenedorTipoId)
+        public void UpdateContenedor(Contenedor contenedor)
         {
-            return _context.ContenedorTipos.Find(contenedorTipoId);
+            if (ExistsContenedor(contenedor.ZonaId, contenedor.Nombre, contenedor.ContenedorId))
+            {
+                throw new ApplicationException("Ya existe un ubicacion con el nombre indicado");
+            }
+
+            _context.Contenedores.Attach(contenedor);
+            _context.Entry(contenedor).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
-        public void AddUbicacionTipo(UbicacionTipo ubicacionTipo)
+        public void RemoveContenedor(int contenedorId)
         {
-            if (Exists<UbicacionTipo>(ubicacionTipo.EmpresaId, ubicacionTipo.Codigo))
+            var contenedor = GetContenedor(contenedorId);
+            _context.Contenedores.Remove(contenedor);
+            _context.SaveChanges();
+        }
+
+        public Contenedor GetContenedor(int contenedorId)
+        {
+            return _context.Contenedores.Find(contenedorId);
+        }
+
+        public void AddZona(Zona zona)
+        {
+            if (ExistsZona(zona.TiendaId, zona.Nombre))
+            {
+                throw new ApplicationException("Ya existe una ubicacion con el nombre indicado");
+            }
+
+            zona.Activada = true;
+            _context.Zonas.Add(zona);
+            _context.SaveChanges();
+        }
+
+        public void UpdateZona(Zona zona)
+        {
+            if (ExistsZona(zona.TiendaId, zona.Nombre, zona.ZonaId))
+            {
+                throw new ApplicationException("Ya existe una ubicacion con el nombre indicado");
+            }
+
+            _context.Zonas.Attach(zona);
+            _context.Entry(zona).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void RemoveZona(int zonaId)
+        {
+            var zona = GetZona(zonaId);
+            _context.Zonas.Remove(zona);
+            _context.SaveChanges();
+        }
+
+        public Zona GetZona(int zonaId)
+        {
+            return _context.Zonas.Find(zonaId);
+        }
+
+        public void AddTipoZona(TipoZona tipoZona)
+        {
+            if (ExistsTipoZona(tipoZona.EmpresaId, tipoZona.Codigo))
             {
                 throw new ApplicationException("Ya existe un tipo de ubicacion con el código indicado");
             }
 
-            _context.UbicacionTipos.Add(ubicacionTipo);
+            _context.TiposZona.Add(tipoZona);
             _context.SaveChanges();
         }
 
-        public void UpdateUbicacionTipo(UbicacionTipo ubicacionTipo)
+        public void UpdateTipoZona(TipoZona tipoZona)
         {
-            _context.UbicacionTipos.Attach(ubicacionTipo);
-            _context.Entry(ubicacionTipo).State = EntityState.Modified;
+            if (ExistsTipoZona(tipoZona.EmpresaId, tipoZona.Codigo, tipoZona.TipoZonaId))
+            {
+                throw new ApplicationException("Ya existe un tipo de ubicacion con el código indicado");
+            }
+
+            _context.TiposZona.Attach(tipoZona);
+            _context.Entry(tipoZona).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
-        public void RemoveUbicacionTipo(int ubicacionTipoId)
+        public void RemoveTipoZona(int tipoZonaId)
         {
-            var ubicacionTipo = GetUbicacionTipo(ubicacionTipoId);
-            _context.UbicacionTipos.Remove(ubicacionTipo);
+            var zonaTipo = GetTipoZona(tipoZonaId);
+            _context.TiposZona.Remove(zonaTipo);
             _context.SaveChanges();
         }
 
-        public UbicacionTipo GetUbicacionTipo(int ubicacionTipoId)
+        public TipoZona GetTipoZona(int tipoZonaId)
         {
-            return _context.UbicacionTipos.Find(ubicacionTipoId);
+            return _context.TiposZona.Find(tipoZonaId);
         }
 
-        private bool Exists<T>(int empresaId, string codigo) where T : class, ICariocaTipo
+        public void AddTipoContenedor(TipoContenedor tipoContenedor)
         {
-            return _context.Set<T>().Any(p => p.EmpresaId == empresaId && p.Codigo == codigo);
+            if (ExistsTipoContenedor(tipoContenedor.EmpresaId, tipoContenedor.Codigo))
+            {
+                throw new ApplicationException("Ya existe un tipo de ubicacion con el código indicado");
+            }
+
+            _context.TiposContenedor.Add(tipoContenedor);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTipoContenedor(TipoContenedor tipoContenedor)
+        {
+            if (ExistsTipoContenedor(tipoContenedor.EmpresaId, tipoContenedor.Codigo, tipoContenedor.TipoContenedorId))
+            {
+                throw new ApplicationException("Ya existe un tipo de ubicacion con el código indicado");
+            }
+
+            _context.TiposContenedor.Attach(tipoContenedor);
+            _context.Entry(tipoContenedor).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void RemoveTipoContenedor(int tipoContenedorId)
+        {
+            var contenedorTipo = GetTipoContenedor(tipoContenedorId);
+            _context.TiposContenedor.Remove(contenedorTipo);
+            _context.SaveChanges();
+        }
+
+        public TipoContenedor GetTipoContenedor(int tipoContenedorId)
+        {
+            return _context.TiposContenedor.Find(tipoContenedorId);
+        }
+
+        public void AddTipoUbicacion(TipoUbicacion tipoUbicacion)
+        {
+            if (ExistsTipoUbicacion(tipoUbicacion.EmpresaId, tipoUbicacion.Codigo))
+            {
+                throw new ApplicationException("Ya existe un tipo de ubicacion con el código indicado");
+            }
+
+            _context.TiposUbicacion.Add(tipoUbicacion);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTipoUbicacion(TipoUbicacion tipoUbicacion)
+        {
+            if (ExistsTipoUbicacion(tipoUbicacion.EmpresaId, tipoUbicacion.Codigo, tipoUbicacion.TipoUbicacionId))
+            {
+                throw new ApplicationException("Ya existe un tipo de ubicacion con el código indicado");
+            }
+
+            _context.TiposUbicacion.Attach(tipoUbicacion);
+            _context.Entry(tipoUbicacion).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void RemoveTipoUbicacion(int tipoUbicacionId)
+        {
+            var ubicacionTipo = GetTipoUbicacion(tipoUbicacionId);
+            _context.TiposUbicacion.Remove(ubicacionTipo);
+            _context.SaveChanges();
+        }
+
+        public TipoUbicacion GetTipoUbicacion(int tipoUbicacionId)
+        {
+            return _context.TiposUbicacion.Find(tipoUbicacionId);
+        }
+
+        private bool ExistsUbicacion(int contenedorId, string nombre, int? ubicacionId = null)
+        {
+            if (ubicacionId.HasValue)
+            {
+                return _context.Ubicaciones.Any(p => p.ContenedorId == contenedorId && p.Nombre == nombre && p.UbicacionId != ubicacionId);
+            }
+            return _context.Ubicaciones.Any(p => p.ContenedorId == contenedorId && p.Nombre == nombre);
+        }
+
+        private bool ExistsContenedor(int zonaId, string nombre, int? contenedorId = null)
+        {
+            if (contenedorId.HasValue)
+            {
+                return _context.Contenedores.Any(p => p.ZonaId == zonaId && p.Nombre == nombre && p.ContenedorId != contenedorId);
+            }
+            return _context.Contenedores.Any(p => p.ZonaId == zonaId && p.Nombre == nombre);
+        }
+
+        private bool ExistsTipoZona(int empresaId, string codigo, int? tipoZonaId = null)
+        {
+            if (tipoZonaId.HasValue)
+            {
+                return _context.TiposZona.Any(p => p.EmpresaId == empresaId && p.Codigo == codigo && p.TipoZonaId != tipoZonaId);
+            }
+            return _context.TiposZona.Any(p => p.EmpresaId == empresaId && p.Codigo == codigo);
+        }
+
+        private bool ExistsTipoContenedor(int empresaId, string codigo, int? tipoContenedorId = null)
+        {
+            if (tipoContenedorId.HasValue)
+            {
+                return _context.TiposContenedor.Any(p => p.EmpresaId == empresaId && p.Codigo == codigo && p.TipoContenedorId != tipoContenedorId);
+            }
+            return _context.TiposContenedor.Any(p => p.EmpresaId == empresaId && p.Codigo == codigo);
+        }
+
+        private bool ExistsTipoUbicacion(int empresaId, string codigo, int? tipoUbicacionId = null)
+        {
+            if (tipoUbicacionId.HasValue)
+            {
+                return _context.TiposUbicacion.Any(p => p.EmpresaId == empresaId && p.Codigo == codigo && p.TipoUbicacionId != tipoUbicacionId);
+            }
+            return _context.TiposUbicacion.Any(p => p.EmpresaId == empresaId && p.Codigo == codigo);
+        }
+
+        private bool ExistsZona(int tiendaId, string nombre, int? zonaId = null)
+        {
+            if (zonaId.HasValue)
+            {
+                return _context.Zonas.Any(p => p.TiendaId == tiendaId && p.Nombre == nombre && p.ZonaId != zonaId);
+            }
+            return _context.Zonas.Any(p => p.TiendaId == tiendaId && p.Nombre == nombre);
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace pet.dal.Model.Entities.Carioca
 {
-    public class ZonaTipo: ICariocaTipo
+    public class TipoZona
     {
-        public virtual int ZonaTipoId { get; set; }
+        public virtual int TipoZonaId { get; set; }
         public virtual string Codigo { get; set; }
         public virtual string Descripcion { get; set; }
 
